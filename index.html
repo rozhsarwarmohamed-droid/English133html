@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Healthy Habits — P.133</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-grad: linear-gradient(145deg, #FF8C00 0%, #FF6200 45%, #E63900 100%);
+    --card: rgba(255,255,255,0.18);
+    --card-border: 2px solid rgba(255,255,255,0.38);
+    --white: #fff;
+    --yellow: #FFE066;
+    --red-dark: #7B2D00;
+    --green: #27AE60;
+    --orange: #E67E22;
+    --mum-red: #C0392B;
+    --child-blue: #1A5276;
+  }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', 'Nunito', 'Comic Sans MS', sans-serif;
+    background: var(--bg-grad);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* ── Layout Shell ── */
+  #app {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  /* ── Sidebar ── */
+  #sidebar {
+    width: 96px;
+    min-width: 96px;
+    flex-shrink: 0;
+    background: rgba(0,0,0,0.30);
+    border-right: 2px solid rgba(255,255,255,0.14);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 8px;
+    z-index: 20;
+  }
+
+  .brand {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px;
+    margin-bottom: 12px;
+  }
+
+  .page-label {
+    font-size: 11px; font-weight: 800;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .nav-btn {
+    width: 72px; height: 80px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.07);
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 5px;
+    color: var(--white);
+    font-size: 10px; font-weight: 800;
+    text-align: center; line-height: 1.2;
+    transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+    touch-action: manipulation;
+  }
+  .nav-btn svg { width: 26px; height: 26px; }
+  .nav-btn.active {
+    background: rgba(255,255,255,0.32);
+    border: 2px solid rgba(255,255,255,0.75);
+    transform: scale(1.07);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+  }
+  .nav-btn:active { transform: scale(0.97); }
+
+  #sidebar-spacer { flex: 1; }
+
+  .progress-dots {
+    display: flex; flex-direction: column;
+    gap: 7px; margin-bottom: 16px;
+  }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,0.28);
+    transition: background 0.25s;
+  }
+  .dot.active { background: var(--yellow); }
+
+  .reset-btn {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: rgba(192,57,43,0.6);
+    border: 2px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--white);
+    touch-action: manipulation;
+    transition: opacity 0.15s;
+  }
+  .reset-btn:active { opacity: 0.7; }
+  .reset-btn svg { width: 22px; height: 22px; }
+
+  /* ── Main ── */
+  #main {
+    flex: 1;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── Top Bar ── */
+  #topbar {
+    background: rgba(0,0,0,0.22);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(255,255,255,0.14);
+    padding: 10px 22px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+    gap: 10px;
+  }
+  #topbar-title {
+    font-size: 18px; font-weight: 800; color: var(--yellow);
+    white-space: nowrap;
+  }
+  #topbar-subtitle {
+    font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 600;
+    text-align: center; flex: 1;
+  }
+  .nav-arrows { display: flex; gap: 10px; }
+  .arrow-btn {
+    background: rgba(255,255,255,0.18); color: var(--white);
+    border: none; border-radius: 12px; padding: 12px 22px;
+    font-size: 17px; font-weight: 800; cursor: pointer;
+    min-height: 52px; min-width: 90px;
+    touch-action: manipulation;
+    transition: opacity 0.15s, background 0.15s;
+  }
+  .arrow-btn.next {
+    background: var(--yellow); color: var(--red-dark);
+  }
+  .arrow-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .arrow-btn:not(:disabled):active { opacity: 0.75; }
+
+  /* ── Slide Area ── */
+  #slide-area {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .slide { display: none; }
+  .slide.active { display: block; }
+
+  .section-inner {
+    padding: 28px 18px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* ── Section Header ── */
+  .section-header { text-align: center; margin-bottom: 24px; }
+  .section-emoji { font-size: 56px; margin-bottom: 6px; }
+  .section-title {
+    font-size: 34px; font-weight: 900; color: var(--white); margin: 0;
+  }
+  .section-sub {
+    font-size: 18px; color: var(--yellow); font-weight: 700;
+    margin: 6px 0 0;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--card);
+    border: var(--card-border);
+    border-radius: 22px;
+    padding: 20px 26px;
+    margin-bottom: 22px;
+  }
+  .card-title {
+    font-size: 22px; font-weight: 800; color: var(--yellow);
+    margin-bottom: 16px;
+  }
+
+  /* ── Info text ── */
+  .info-text {
+    font-size: 19px; color: var(--white); font-weight: 600;
+    line-height: 1.75; margin: 0;
+  }
+  .highlight { color: var(--yellow); }
+
+  .tip-bar {
+    margin-top: 14px;
+    background: rgba(255,224,102,0.18);
+    border-left: 5px solid var(--yellow);
+    border-radius: 0 12px 12px 0;
+    padding: 12px 18px;
+  }
+  .tip-bar p { font-size: 17px; color: var(--white); margin: 0; line-height: 1.7; }
+
+  .abc-tip {
+    margin-top: 16px;
+    background: #E67E22;
+    border-radius: 16px;
+    padding: 14px 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .abc-tip-icon { font-size: 34px; }
+  .abc-tip-label { font-size: 16px; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+  .abc-tip-body { font-size: 16px; color: var(--white); line-height: 1.6; }
+
+  /* ── Write Tips – inputs ── */
+  .write-label {
+    display: block;
+    font-size: 20px; font-weight: 800;
+    color: var(--white); font-style: italic;
+    margin-bottom: 10px;
+  }
+  .write-input {
+    width: 100%;
+    min-height: 62px;
+    font-size: 22px; font-weight: 700;
+    background: rgba(255,255,255,0.9);
+    border: 3px solid rgba(255,140,0,0.6);
+    border-radius: 16px;
+    padding: 12px 18px;
+    color: #3D1000;
+    outline: none;
+    margin-bottom: 18px;
+    font-family: inherit;
+    /* Prevent zoom on Android */
+    font-size: 22px;
+  }
+  .write-input:focus { border-color: var(--yellow); }
+
+  .save-btn {
+    background: var(--green); color: var(--white);
+    font-size: 20px; font-weight: 800;
+    border: none; border-radius: 16px;
+    padding: 18px 36px;
+    cursor: pointer;
+    width: 100%; min-height: 64px;
+    touch-action: manipulation;
+    font-family: inherit;
+  }
+  .save-btn:active { opacity: 0.8; }
+
+  .saved-result {
+    display: none;
+    margin-top: 16px;
+    background: rgba(39,174,96,0.25);
+    border: 2px solid var(--green);
+    border-radius: 16px;
+    padding: 14px 20px;
+  }
+  .saved-result.show { display: block; }
+  .saved-result-title {
+    font-size: 18px; font-weight: 800; color: var(--white); margin-bottom: 8px;
+  }
+  .saved-line { font-size: 18px; color: var(--white); margin-top: 4px; }
+
+  /* ── Checklist ── */
+  .checklist { display: flex; flex-direction: column; gap: 12px; }
+  .checklist-btn {
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(255,255,255,0.12);
+    border: 3px solid rgba(255,255,255,0.25);
+    border-radius: 16px; padding: 18px 20px;
+    cursor: pointer; min-height: 68px;
+    transition: background 0.15s, border 0.15s;
+    touch-action: manipulation; width: 100%;
+    font-family: inherit;
+  }
+  .checklist-btn.checked {
+    background: rgba(39,174,96,0.35);
+    border-color: var(--green);
+  }
+  .check-circle {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+    transition: background 0.15s;
+    color: var(--white); font-weight: 900;
+  }
+  .checklist-btn.checked .check-circle {
+    background: var(--green);
+  }
+  .check-label {
+    font-size: 20px; font-weight: 700; color: var(--white);
+    text-align: left; flex: 1;
+    transition: opacity 0.15s;
+  }
+  .checklist-btn.checked .check-label {
+    text-decoration: line-through; opacity: 0.75;
+  }
+  .checklist-score {
+    margin-top: 14px; text-align: center;
+    font-size: 18px; font-weight: 700; color: var(--yellow);
+  }
+
+  /* ── Exercise Grid ── */
+  .exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .exercise-btn {
+    background: rgba(255,255,255,0.18);
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 22px 14px;
+    cursor: pointer; min-height: 100px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 8px;
+    transition: background 0.15s, border 0.15s, box-shadow 0.15s;
+    touch-action: manipulation; width: 100%;
+    font-family: inherit;
+  }
+  .exercise-btn.active {
+    background: var(--green);
+    border-color: #A9DFBF;
+    box-shadow: 0 6px 20px rgba(39,174,96,0.35);
+  }
+  .exercise-btn:active { transform: scale(0.97); }
+  .ex-emoji { font-size: 40px; }
+  .ex-label {
+    font-size: 19px; font-weight: 800; color: var(--white); text-align: center;
+  }
+  .ex-badge {
+    display: none;
+    font-size: 13px;
+    background: rgba(255,255,255,0.25);
+    color: var(--white); border-radius: 20px;
+    padding: 2px 10px; font-weight: 700;
+  }
+  .exercise-btn.active .ex-badge { display: block; }
+
+  /* ── Speech Bubble ── */
+  .speech-bubble-wrap { margin-top: 16px; display: flex; justify-content: flex-end; }
+  .speech-bubble {
+    background: var(--yellow); color: var(--red-dark);
+    font-size: 18px; font-weight: 800;
+    border-radius: 20px 20px 4px 20px;
+    padding: 12px 20px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    max-width: 270px;
+  }
+
+  /* ── Sentence Builder ── */
+  #sentence-builder { display: none; }
+  #sentence-builder.show { display: block; }
+  .sentence-display {
+    background: rgba(255,255,255,0.12);
+    border-radius: 16px; padding: 18px 20px;
+    font-size: 21px; color: var(--white); font-weight: 700;
+    line-height: 1.8; margin-bottom: 16px;
+  }
+  .share-btn {
+    background: var(--orange); color: var(--white);
+    font-size: 19px; font-weight: 800; border: none;
+    border-radius: 16px; padding: 18px 28px;
+    cursor: pointer; width: 100%; min-height: 64px;
+    touch-action: manipulation; font-family: inherit;
+  }
+  .share-btn:active { opacity: 0.8; }
+  .share-success {
+    display: none; margin-top: 14px;
+    text-align: center; font-size: 20px;
+    font-weight: 800; color: var(--yellow);
+  }
+  .share-success.show { display: block; }
+
+  #no-selection { text-align: center; padding: 16px; color: rgba(255,255,255,0.6); font-size: 17px; font-weight: 600; }
+
+  /* ── Roleplay ── */
+  .grammar-box {
+    background: var(--child-blue);
+    border: 3px solid #5DADE2;
+    border-radius: 20px; padding: 18px 24px;
+    margin-bottom: 22px;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .grammar-label { font-size: 16px; font-weight: 700; color: #5DADE2; margin-bottom: 4px; }
+  .grammar-rule { font-size: 24px; font-weight: 900; color: var(--white); }
+  .grammar-icon { font-size: 40px; }
+
+  .instruction-card {
+    background: var(--card); border: var(--card-border);
+    border-radius: 18px; padding: 14px 20px;
+    margin-bottom: 20px; text-align: center;
+  }
+  .instruction-text { font-size: 19px; color: var(--white); font-weight: 700; }
+  .pill-will {
+    background: var(--green); color: var(--white);
+    border-radius: 10px; padding: 2px 12px; font-weight: 800;
+  }
+  .pill-wont {
+    background: var(--mum-red); color: var(--white);
+    border-radius: 10px; padding: 2px 12px; font-weight: 800;
+  }
+
+  /* ── Dialogue ── */
+  .dialogue-list { display: flex; flex-direction: column; gap: 14px; }
+  .dialogue-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 12px 14px; border-radius: 16px;
+  }
+  .dialogue-row.mum { background: rgba(192,57,43,0.12); }
+  .dialogue-row.child { background: rgba(26,82,118,0.15); }
+
+  .speaker-badge {
+    color: var(--white); font-size: 14px; font-weight: 800;
+    border-radius: 10px; padding: 4px 10px;
+    white-space: nowrap; flex-shrink: 0;
+    min-width: 72px; text-align: center;
+    margin-top: 4px;
+  }
+  .speaker-badge.mum { background: var(--mum-red); }
+  .speaker-badge.child { background: var(--child-blue); }
+
+  .line-content {
+    flex: 1; font-size: 20px; color: var(--white); font-weight: 700;
+    line-height: 1.6; display: flex;
+    align-items: center; flex-wrap: wrap; gap: 6px;
+  }
+
+  .blank-pill {
+    border-radius: 10px; padding: 2px 14px;
+    font-size: 20px; font-weight: 900;
+    min-width: 72px; text-align: center;
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.5);
+    border: 2px dashed rgba(255,255,255,0.5);
+    transition: background 0.15s;
+  }
+  .blank-pill.filled { background: var(--orange); color: var(--white); border: 2px solid var(--orange); }
+  .blank-pill.correct { background: var(--green); color: var(--white); border: 2px solid var(--green); }
+  .blank-pill.wrong { background: var(--mum-red); color: var(--white); border: 2px solid var(--mum-red); }
+
+  .choice-buttons { display: flex; gap: 8px; margin-left: 6px; flex-wrap: wrap; }
+  .choice-btn {
+    background: rgba(255,255,255,0.18); color: var(--white);
+    font-size: 18px; font-weight: 800;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 10px; padding: 10px 18px;
+    cursor: pointer; min-height: 50px; min-width: 80px;
+    touch-action: manipulation; font-family: inherit;
+    transition: background 0.12s;
+  }
+  .choice-btn.selected {
+    background: var(--orange);
+    border-color: #F0B27A;
+  }
+  .choice-btn:active { opacity: 0.75; }
+
+  .result-icon { font-size: 22px; margin-left: 6px; }
+
+  /* ── Check/Score Bar ── */
+  .check-bar { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+  .check-btn {
+    flex: 1; background: var(--yellow); color: var(--red-dark);
+    font-size: 21px; font-weight: 900; border: none;
+    border-radius: 18px; padding: 18px;
+    cursor: pointer; min-height: 68px;
+    touch-action: manipulation; font-family: inherit;
+    display: none;
+  }
+  .check-btn.show { display: block; }
+  .check-btn:active { opacity: 0.8; }
+  .score-display {
+    flex: 1; font-size: 22px; font-weight: 900;
+    border-radius: 18px; padding: 18px;
+    text-align: center; color: var(--white);
+    display: none;
+  }
+  .score-display.show { display: block; }
+  .score-display.perfect { background: var(--green); }
+  .score-display.partial { background: var(--orange); }
+  .retry-btn {
+    background: var(--mum-red); color: var(--white);
+    font-size: 19px; font-weight: 800; border: none;
+    border-radius: 18px; padding: 18px 26px;
+    cursor: pointer; min-height: 68px;
+    touch-action: manipulation; font-family: inherit;
+    display: none;
+  }
+  .retry-btn.show { display: block; }
+  .retry-btn:active { opacity: 0.8; }
+  .fill-hint {
+    flex: 1; text-align: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 17px; font-weight: 600;
+    padding-top: 22px;
+    display: block;
+  }
+  .fill-hint.hide { display: none; }
+
+  /* ── Extra Words ── */
+  .extra-words { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+  .extra-btn {
+    background: rgba(255,255,255,0.18); color: var(--white);
+    font-size: 18px; font-weight: 800;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 16px; padding: 16px 24px;
+    cursor: pointer; touch-action: manipulation;
+    font-family: inherit; min-height: 60px;
+    transition: background 0.12s;
+  }
+  .extra-btn.selected {
+    background: var(--mum-red);
+    border-color: #F1948A;
+  }
+  .extra-btn:active { opacity: 0.8; }
+  .extra-convo {
+    background: rgba(192,57,43,0.2);
+    border: 2px solid var(--mum-red);
+    border-radius: 18px; padding: 18px 22px;
+    display: none;
+  }
+  .extra-convo.show { display: block; }
+  .extra-convo-label {
+    font-size: 17px; color: var(--yellow); font-weight: 700; margin-bottom: 10px;
+  }
+  .extra-convo-text {
+    font-size: 20px; color: var(--white); font-weight: 700; line-height: 1.9;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center; padding: 16px;
+    font-size: 12px; color: rgba(255,255,255,0.35); font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ── Sidebar ── -->
+  <nav id="sidebar">
+    <div class="brand">🍊</div>
+    <div class="page-label">P.133</div>
+
+    <button class="nav-btn active" id="nav-0" onclick="goTo(0)" title="Hygiene">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2C8 2 5 5 5 8c0 2 .5 3.5 1 5l1 7c.2 1 1 2 2 2h6c1 0 1.8-1 2-2l1-7c.5-1.5 1-3 1-5 0-3-3-6-7-6z"/>
+      </svg>
+      Hygiene
+    </button>
+
+    <button class="nav-btn" id="nav-1" onclick="goTo(1)" title="Exercise">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+      Exercise
+    </button>
+
+    <button class="nav-btn" id="nav-2" onclick="goTo(2)" title="Roleplay">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      Roleplay
+    </button>
+
+    <div id="sidebar-spacer"></div>
+
+    <div class="progress-dots">
+      <div class="dot active" id="dot-0"></div>
+      <div class="dot" id="dot-1"></div>
+      <div class="dot" id="dot-2"></div>
+    </div>
+
+    <button class="reset-btn" onclick="resetAll()" title="Reset lesson">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="1 4 1 10 7 10"/>
+        <path d="M3.51 15a9 9 0 1 0 .49-4"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- ── Main ── -->
+  <div id="main">
+
+    <!-- Top Bar -->
+    <div id="topbar">
+      <div id="topbar-title">🪥 Hygiene</div>
+      <div id="topbar-subtitle">Cambridge Global English • Grade 3 • 8.3 Healthy Habits</div>
+      <div class="nav-arrows">
+        <button class="arrow-btn" id="btn-back" onclick="goTo(current-1)" disabled>◀ Back</button>
+        <button class="arrow-btn next" id="btn-next" onclick="goTo(current+1)">Next ▶</button>
+      </div>
+    </div>
+
+    <!-- Slide Area -->
+    <div id="slide-area">
+
+      <!-- ════════════════════════════════════════
+           SLIDE 0 — HYGIENE
+           ════════════════════════════════════════ -->
+      <div class="slide active" id="slide-0">
+        <div class="section-inner">
+
+          <div class="section-header">
+            <div class="section-emoji">🪥💧🧼</div>
+            <h2 class="section-title">Keep Clean!</h2>
+            <p class="section-sub">Activity 4 — Listen, Sing and Write</p>
+          </div>
+
+          <!-- Info card -->
+          <div class="card">
+            <p class="info-text">
+              To keep our bodies healthy and strong, we need to keep clean.
+              We need to <b class="highlight">wash our hands</b> and <b class="highlight">brush our teeth!</b>
+            </p>
+            <div class="tip-bar">
+              <p>
+                ✅ Always wash your hands <b class="highlight">before</b> you eat<br>
+                ✅ Always wash your hands <b class="highlight">after</b> you use the toilet
+              </p>
+            </div>
+            <div class="abc-tip">
+              <div class="abc-tip-icon">🎵</div>
+              <div>
+                <div class="abc-tip-label">💡 Tip!</div>
+                <div class="abc-tip-body">
+                  Sing <b>The ABC Song</b> as you wash your hands.
+                  By the end, your hands will be clean!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Write tips -->
+          <div class="card">
+            <h3 class="card-title">✏️ Write your own tips!</h3>
+
+            <label class="write-label" for="tip-after">🪥 Brush your teeth after…</label>
+            <input class="write-input" id="tip-after" type="text" placeholder="e.g. eating dinner…">
+
+            <label class="write-label" for="tip-before">🪥 Brush your teeth before…</label>
+            <input class="write-input" id="tip-before" type="text" placeholder="e.g. going to bed…">
+
+            <button class="save-btn" onclick="saveTips()">✅ Save my tips!</button>
+
+            <div class="saved-result" id="saved-result">
+              <div class="saved-result-title">🌟 Great tips! Here's what you wrote:</div>
+              <div class="saved-line" id="saved-after"></div>
+              <div class="saved-line" id="saved-before"></div>
+            </div>
+          </div>
+
+          <!-- Hygiene Checklist -->
+          <div class="card">
+            <h3 class="card-title">☑️ Daily Hygiene Checklist</h3>
+            <div class="checklist" id="checklist">
+              <button class="checklist-btn" data-id="hands_eat" onclick="toggleCheck(this)">
+                <div class="check-circle"></div>
+                <span class="check-label">Wash hands before eating 🍽️</span>
+              </button>
+              <button class="checklist-btn" data-id="hands_toilet" onclick="toggleCheck(this)">
+                <div class="check-circle"></div>
+                <span class="check-label">Wash hands after the toilet 🚽</span>
+              </button>
+              <button class="checklist-btn" data-id="teeth_morning" onclick="toggleCheck(this)">
+                <div class="check-circle"></div>
+                <span class="check-label">Brush teeth in the morning ☀️</span>
+              </button>
+              <button class="checklist-btn" data-id="teeth_night" onclick="toggleCheck(this)">
+                <div class="check-circle"></div>
+                <span class="check-label">Brush teeth before bed 🌙</span>
+              </button>
+              <button class="checklist-btn" data-id="face_wash" onclick="toggleCheck(this)">
+                <div class="check-circle"></div>
+                <span class="check-label">Wash your face every day 💧</span>
+              </button>
+            </div>
+            <div class="checklist-score" id="checklist-score">0/5 habits checked ⭐</div>
+          </div>
+
+          <div class="footer">Cambridge Global English • Grade 3 • Unit 8.3 • Page 133</div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════
+           SLIDE 1 — EXERCISE
+           ════════════════════════════════════════ -->
+      <div class="slide" id="slide-1">
+        <div class="section-inner">
+
+          <div class="section-header">
+            <div class="section-emoji">🏃💪🤸</div>
+            <h2 class="section-title">Exercise!</h2>
+            <p class="section-sub">Activity 5 — Read and Talk</p>
+          </div>
+
+          <!-- Info -->
+          <div class="card">
+            <p class="info-text">
+              💪 <b class="highlight">Exercise</b> builds strong bones and muscles.<br>
+              <span style="font-size:18px;font-weight:600">What are your favourite ways to get exercise?</span>
+            </p>
+            <div class="speech-bubble-wrap">
+              <div class="speech-bubble">
+                🧘 I like to <span style="color:#C0392B">do yoga</span>.
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity grid -->
+          <div class="card">
+            <h3 class="card-title">👆 Tap your favourites!</h3>
+            <div class="exercise-grid" id="exercise-grid">
+              <button class="exercise-btn" data-id="dance" onclick="toggleEx(this)">
+                <span class="ex-emoji">💃</span>
+                <span class="ex-label">Dance</span>
+                <span class="ex-badge">✓ Favourite!</span>
+              </button>
+              <button class="exercise-btn" data-id="yoga" onclick="toggleEx(this)">
+                <span class="ex-emoji">🧘</span>
+                <span class="ex-label">Do Yoga</span>
+                <span class="ex-badge">✓ Favourite!</span>
+              </button>
+              <button class="exercise-btn" data-id="karate" onclick="toggleEx(this)">
+                <span class="ex-emoji">🥋</span>
+                <span class="ex-label">Karate</span>
+                <span class="ex-badge">✓ Favourite!</span>
+              </button>
+              <button class="exercise-btn" data-id="walk" onclick="toggleEx(this)">
+                <span class="ex-emoji">🚶</span>
+                <span class="ex-label">Walk</span>
+                <span class="ex-badge">✓ Favourite!</span>
+              </button>
+              <button class="exercise-btn" data-id="run" onclick="toggleEx(this)">
+                <span class="ex-emoji">🏃</span>
+                <span class="ex-label">Run</span>
+                <span class="ex-badge">✓ Favourite!</span>
+              </button>
+              <button class="exercise-btn" data-id="ball" onclick="toggleEx(this)">
+                <span class="ex-emoji">⚽</span>
+                <span class="ex-label">Play Ball</span>
+                <span class="ex-badge">✓ Favourite!</span>
+              </button>
+              <button class="exercise-btn" data-id="skipping" onclick="toggleEx(this)">
+                <span class="ex-emoji">🪢</span>
+                <span class="ex-label">Skip Rope</span>
+                <span class="ex-badge">✓ Favourite!</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sentence builder -->
+          <div class="card" id="sentence-builder">
+            <h3 class="card-title">💬 Now say your sentence!</h3>
+            <div class="sentence-display" id="sentence-display"></div>
+            <button class="share-btn" id="share-btn" onclick="doShare()">🗣️ Share with the class!</button>
+            <div class="share-success" id="share-success">🌟 Amazing! Great sharing!</div>
+          </div>
+
+          <div id="no-selection">Tap activities above to select your favourites!</div>
+
+          <div class="footer">Cambridge Global English • Grade 3 • Unit 8.3 • Page 133</div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════
+           SLIDE 2 — ROLEPLAY
+           ════════════════════════════════════════ -->
+      <div class="slide" id="slide-2">
+        <div class="section-inner">
+
+          <div class="section-header">
+            <div class="section-emoji">🌙💬🛏️</div>
+            <h2 class="section-title">Bedtime Roleplay</h2>
+            <p class="section-sub">Activity 6 — Listen and Talk</p>
+          </div>
+
+          <!-- Grammar box -->
+          <div class="grammar-box">
+            <div>
+              <div class="grammar-label">📌 Language Focus</div>
+              <div class="grammar-rule">will + not = <span class="highlight">won't</span></div>
+            </div>
+            <div class="grammar-icon">📖</div>
+          </div>
+
+          <!-- Instruction -->
+          <div class="instruction-card">
+            <p class="instruction-text">
+              👆 Tap <span class="pill-will">will</span> or <span class="pill-wont">won't</span> to fill in each blank!
+            </p>
+          </div>
+
+          <!-- Dialogue -->
+          <div class="card">
+            <div class="dialogue-list" id="dialogue-list">
+
+              <!-- Line 0: display — Mum -->
+              <div class="dialogue-row mum">
+                <div class="speaker-badge mum">👩 Mum</div>
+                <div class="line-content">
+                  <span>Remember to </span><b class="highlight">brush your teeth</b><span>.</span>
+                </div>
+              </div>
+
+              <!-- Line 1: blank — Child -->
+              <div class="dialogue-row child">
+                <div class="speaker-badge child">🧒 Child</div>
+                <div class="line-content">
+                  <span>I </span>
+                  <span class="blank-pill" id="blank-1">___</span>
+                  <span>.</span>
+                  <div class="choice-buttons" id="choices-1">
+                    <button class="choice-btn" onclick="choose(1,'will',this)">will</button>
+                    <button class="choice-btn" onclick="choose(1,'won\'t',this)">won't</button>
+                  </div>
+                  <span class="result-icon" id="result-1" style="display:none"></span>
+                </div>
+              </div>
+
+              <!-- Line 2: display — Mum -->
+              <div class="dialogue-row mum">
+                <div class="speaker-badge mum">👩 Mum</div>
+                <div class="line-content">
+                  <span>Don't forget to </span><b class="highlight">wash your face</b><span>.</span>
+                </div>
+              </div>
+
+              <!-- Line 3: blank — Child -->
+              <div class="dialogue-row child">
+                <div class="speaker-badge child">🧒 Child</div>
+                <div class="line-content">
+                  <span>I </span>
+                  <span class="blank-pill" id="blank-3">___</span>
+                  <span>.</span>
+                  <div class="choice-buttons" id="choices-3">
+                    <button class="choice-btn" onclick="choose(3,'will',this)">will</button>
+                    <button class="choice-btn" onclick="choose(3,'won\'t',this)">won't</button>
+                  </div>
+                  <span class="result-icon" id="result-3" style="display:none"></span>
+                </div>
+              </div>
+
+              <!-- Line 4: display — Mum -->
+              <div class="dialogue-row mum">
+                <div class="speaker-badge mum">👩 Mum</div>
+                <div class="line-content">
+                  <span>Don't </span><b class="highlight">stay up too late</b><span>.</span>
+                </div>
+              </div>
+
+              <!-- Line 5: blank — Child -->
+              <div class="dialogue-row child">
+                <div class="speaker-badge child">🧒 Child</div>
+                <div class="line-content">
+                  <span>I </span>
+                  <span class="blank-pill" id="blank-5">___</span>
+                  <span>.</span>
+                  <div class="choice-buttons" id="choices-5">
+                    <button class="choice-btn" onclick="choose(5,'will',this)">will</button>
+                    <button class="choice-btn" onclick="choose(5,'won\'t',this)">won't</button>
+                  </div>
+                  <span class="result-icon" id="result-5" style="display:none"></span>
+                </div>
+              </div>
+
+              <!-- Line 6: display — Child -->
+              <div class="dialogue-row child">
+                <div class="speaker-badge child">🧒 Child</div>
+                <div class="line-content">
+                  <span>Mum, will you come and </span><b class="highlight">turn out the light</b><span>?</span>
+                </div>
+              </div>
+
+              <!-- Line 7: blank — Mum -->
+              <div class="dialogue-row mum">
+                <div class="speaker-badge mum">👩 Mum</div>
+                <div class="line-content">
+                  <span>Yes, I </span>
+                  <span class="blank-pill" id="blank-7">___</span>
+                  <span>.</span>
+                  <div class="choice-buttons" id="choices-7">
+                    <button class="choice-btn" onclick="choose(7,'will',this)">will</button>
+                    <button class="choice-btn" onclick="choose(7,'won\'t',this)">won't</button>
+                  </div>
+                  <span class="result-icon" id="result-7" style="display:none"></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Check/score bar -->
+          <div class="check-bar">
+            <button class="check-btn" id="check-btn" onclick="checkAnswers()">✅ Check My Answers!</button>
+            <div class="score-display" id="score-display"></div>
+            <button class="retry-btn" id="retry-btn" onclick="resetRoleplay()">🔄 Reset</button>
+            <span class="fill-hint" id="fill-hint">Fill in all 4 blanks to check!</span>
+          </div>
+
+          <!-- Extra words -->
+          <div class="card">
+            <h3 class="card-title">🗣️ Now have a new conversation!</h3>
+            <p style="font-size:17px;color:var(--white);font-weight:600;margin-bottom:16px">
+              Use the words in the box. Tap one, then practise with a partner!
+            </p>
+            <div class="extra-words">
+              <button class="extra-btn" onclick="selectExtra(this,'take a shower')">take a shower</button>
+              <button class="extra-btn" onclick="selectExtra(this,'spend too much time on your phone')">spend too much time on your phone</button>
+              <button class="extra-btn" onclick="selectExtra(this,'say goodnight')">say goodnight</button>
+            </div>
+            <div class="extra-convo" id="extra-convo">
+              <div class="extra-convo-label">💬 Try this conversation:</div>
+              <div class="extra-convo-text">
+                <span style="color:#E74C3C">👩 Mum:</span> Don't forget to <b class="highlight" id="extra-phrase-text"></b>.<br>
+                <span style="color:#5DADE2">🧒 Child:</span> OK, I <b class="highlight">will</b>! / I <b class="highlight">won't</b>!
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">Cambridge Global English • Grade 3 • Unit 8.3 • Page 133</div>
+        </div>
+      </div>
+
+    </div><!-- /slide-area -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+// ── State ────────────────────────────────────────────────────────────────────
+var current = 0;
+var checkedCount = 0;
+
+var SECTIONS = [
+  { emoji: "🪥", label: "Hygiene" },
+  { emoji: "🏃", label: "Exercise" },
+  { emoji: "🌙", label: "Roleplay" },
+];
+
+// ── Navigation ───────────────────────────────────────────────────────────────
+function goTo(idx) {
+  if (idx < 0 || idx >= SECTIONS.length) return;
+  document.getElementById('slide-' + current).classList.remove('active');
+  document.getElementById('nav-' + current).classList.remove('active');
+  document.getElementById('dot-' + current).classList.remove('active');
+
+  current = idx;
+
+  document.getElementById('slide-' + current).classList.add('active');
+  document.getElementById('nav-' + current).classList.add('active');
+  document.getElementById('dot-' + current).classList.add('active');
+
+  document.getElementById('topbar-title').textContent =
+    SECTIONS[current].emoji + ' ' + SECTIONS[current].label;
+
+  document.getElementById('btn-back').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === SECTIONS.length - 1;
+
+  document.getElementById('slide-area').scrollTop = 0;
+}
+
+function resetAll() { goTo(0); }
+
+// ── Slide 0: Hygiene ─────────────────────────────────────────────────────────
+function saveTips() {
+  var after  = document.getElementById('tip-after').value.trim();
+  var before = document.getElementById('tip-before').value.trim();
+  if (!after && !before) return;
+  var result = document.getElementById('saved-result');
+  var saAfter  = document.getElementById('saved-after');
+  var saBefore = document.getElementById('saved-before');
+  result.classList.add('show');
+  saAfter.innerHTML  = after  ? '🪥 Brush your teeth after <b style="color:var(--yellow)">'  + escHtml(after)  + '</b>' : '';
+  saBefore.innerHTML = before ? '🪥 Brush your teeth before <b style="color:var(--yellow)">' + escHtml(before) + '</b>' : '';
+  saAfter.style.display  = after  ? '' : 'none';
+  saBefore.style.display = before ? '' : 'none';
+}
+
+function toggleCheck(btn) {
+  var wasChecked = btn.classList.contains('checked');
+  btn.classList.toggle('checked');
+  var circle = btn.querySelector('.check-circle');
+  circle.textContent = btn.classList.contains('checked') ? '✓' : '';
+  checkedCount += btn.classList.contains('checked') ? 1 : -1;
+  var all = document.querySelectorAll('.checklist-btn').length;
+  document.getElementById('checklist-score').textContent =
+    checkedCount + '/' + all + ' habits checked ⭐';
+}
+
+// ── Slide 1: Exercise ────────────────────────────────────────────────────────
+var pickedExercises = new Set();
+var EXERCISE_LABELS = {
+  dance: 'dance', yoga: 'do yoga', karate: 'karate',
+  walk: 'walk', run: 'run', ball: 'play ball', skipping: 'skip rope'
+};
+
+function toggleEx(btn) {
+  var id = btn.getAttribute('data-id');
+  if (pickedExercises.has(id)) {
+    pickedExercises.delete(id);
+    btn.classList.remove('active');
+  } else {
+    pickedExercises.add(id);
+    btn.classList.add('active');
+  }
+  updateSentenceBuilder();
+}
+
+function updateSentenceBuilder() {
+  var builder = document.getElementById('sentence-builder');
+  var noSel   = document.getElementById('no-selection');
+  var display = document.getElementById('sentence-display');
+  var shareBtn = document.getElementById('share-btn');
+  var shareSuccess = document.getElementById('share-success');
+
+  if (pickedExercises.size === 0) {
+    builder.classList.remove('show');
+    noSel.style.display = '';
+    shareBtn.style.display = '';
+    shareSuccess.classList.remove('show');
+    return;
+  }
+  builder.classList.add('show');
+  noSel.style.display = 'none';
+
+  var html = '';
+  var first = true;
+  pickedExercises.forEach(function(id) {
+    var lbl = EXERCISE_LABELS[id];
+    if (first) {
+      html += '<div>I like to <b style="color:var(--yellow)">' + lbl + '</b>.</div>';
+      first = false;
+    } else {
+      html += '<div>I also like to <b style="color:var(--yellow)">' + lbl + '</b>.</div>';
+    }
+  });
+  display.innerHTML = html;
+  shareBtn.style.display = '';
+  shareSuccess.classList.remove('show');
+}
+
+function doShare() {
+  document.getElementById('share-btn').style.display = 'none';
+  document.getElementById('share-success').classList.add('show');
+}
+
+// ── Slide 2: Roleplay ────────────────────────────────────────────────────────
+var CORRECT = { 1: 'will', 3: "won't", 5: 'will', 7: 'will' };
+var blankIds = [1, 3, 5, 7];
+var roleAnswers = {};
+var roleChecked = false;
+
+blankIds.forEach(function(i) { roleAnswers[i] = null; });
+
+function choose(lineIdx, val, btn) {
+  if (roleChecked) return;
+  roleAnswers[lineIdx] = val;
+
+  // Update choice button highlights
+  var btns = document.getElementById('choices-' + lineIdx).querySelectorAll('.choice-btn');
+  btns.forEach(function(b) { b.classList.remove('selected'); });
+  btn.classList.add('selected');
+
+  // Update blank pill
+  var pill = document.getElementById('blank-' + lineIdx);
+  pill.textContent = val;
+  pill.className = 'blank-pill filled';
+
+  updateCheckBar();
+}
+
+function updateCheckBar() {
+  var allAnswered = blankIds.every(function(i) { return roleAnswers[i] !== null; });
+  var checkBtn  = document.getElementById('check-btn');
+  var fillHint  = document.getElementById('fill-hint');
+  var scoreDisp = document.getElementById('score-display');
+  var retryBtn  = document.getElementById('retry-btn');
+
+  if (roleChecked) return;
+
+  if (allAnswered) {
+    checkBtn.classList.add('show');
+    fillHint.classList.add('hide');
+  } else {
+    checkBtn.classList.remove('show');
+    fillHint.classList.remove('hide');
+  }
+  scoreDisp.classList.remove('show');
+  retryBtn.classList.remove('show');
+}
+
+function checkAnswers() {
+  roleChecked = true;
+  var score = 0;
+  blankIds.forEach(function(i) {
+    var correct = roleAnswers[i] === CORRECT[i];
+    if (correct) score++;
+    var pill   = document.getElementById('blank-' + lineIdx);
+    var pill   = document.getElementById('blank-' + i);
+    pill.className = 'blank-pill ' + (correct ? 'correct' : 'wrong');
+
+    // Hide choice buttons
+    document.getElementById('choices-' + i).style.display = 'none';
+
+    // Show result icon
+    var res = document.getElementById('result-' + i);
+    res.style.display = '';
+    res.textContent = correct ? '✅' : '❌ → ' + CORRECT[i];
+  });
+
+  var checkBtn  = document.getElementById('check-btn');
+  var scoreDisp = document.getElementById('score-display');
+  var retryBtn  = document.getElementById('retry-btn');
+  var fillHint  = document.getElementById('fill-hint');
+
+  checkBtn.classList.remove('show');
+  fillHint.classList.add('hide');
+  retryBtn.classList.add('show');
+  scoreDisp.classList.add('show');
+
+  if (score === blankIds.length) {
+    scoreDisp.className = 'score-display show perfect';
+    scoreDisp.textContent = '🎉 Perfect! All correct!';
+  } else {
+    scoreDisp.className = 'score-display show partial';
+    scoreDisp.textContent = '⭐ ' + score + '/' + blankIds.length + ' correct! Try again!';
+  }
+}
+
+function resetRoleplay() {
+  roleChecked = false;
+  blankIds.forEach(function(i) { roleAnswers[i] = null; });
+
+  blankIds.forEach(function(i) {
+    var pill = document.getElementById('blank-' + i);
+    pill.textContent = '___';
+    pill.className = 'blank-pill';
+
+    var choices = document.getElementById('choices-' + i);
+    choices.style.display = '';
+    choices.querySelectorAll('.choice-btn').forEach(function(b) {
+      b.classList.remove('selected');
+    });
+
+    var res = document.getElementById('result-' + i);
+    res.style.display = 'none';
+    res.textContent = '';
+  });
+
+  document.getElementById('check-btn').classList.remove('show');
+  document.getElementById('score-display').classList.remove('show');
+  document.getElementById('retry-btn').classList.remove('show');
+  document.getElementById('fill-hint').classList.remove('hide');
+
+  // Reset extra phrase
+  document.querySelectorAll('.extra-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  document.getElementById('extra-convo').classList.remove('show');
+  document.getElementById('extra-phrase-text').textContent = '';
+}
+
+function selectExtra(btn, phrase) {
+  document.querySelectorAll('.extra-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  btn.classList.add('selected');
+  document.getElementById('extra-phrase-text').textContent = phrase;
+  document.getElementById('extra-convo').classList.add('show');
+}
+
+// ── Utility ───────────────────────────────────────────────────────────────────
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
